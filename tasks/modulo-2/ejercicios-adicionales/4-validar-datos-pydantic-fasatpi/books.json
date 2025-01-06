@@ -1,0 +1,12 @@
+[
+    {
+        "title": "book 1",
+        "author": "author 1",
+        "publication_year": 2024
+    },
+    {
+        "title": "book 2",
+        "author": "author 2",
+        "publication_year": 2024
+    }
+]
