@@ -37,7 +37,7 @@ class ProductsTree:
 
     def _insert(self, node, product):
         if product.id == node.product.id:
-            print(f"Product already in the list")
+            print(f"Product {product.id} already in the list")
             return False
         elif product.id < node.product.id:
             if node.left is None:
