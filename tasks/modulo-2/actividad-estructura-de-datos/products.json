@@ -1,0 +1,20 @@
+[
+  {
+    "id": 100,
+    "name": "Pan",
+    "price": 5.50,
+    "stock": 1000
+  },
+  {
+    "id": 101,
+    "name": "Leche",
+    "price": 10,
+    "stock": 500
+  },
+  {
+    "id": 200,
+    "name": "Agua",
+    "price": 8.50,
+    "stock": 5000
+  }
+]

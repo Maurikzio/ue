@@ -3,16 +3,12 @@ from pydantic import BaseModel, Field
 from products import Product, ProductsTree
 from enum import Enum
 from orders import OrderLinkedList, Order
+import json
 
-
-app = FastAPI(title='Products API')
+PRODUCTS_PATH = 'products.json'
+ORDERS_PATH = 'orders.json'
 products_tree = ProductsTree()  # almacenaremos aqui los productos
 orders_list = OrderLinkedList()  # almacenaremos aqui las ordenes
-
-
-@app.get("/")
-def root():
-    return {"message": "Hello world!"}
 
 
 class ProductSchema(BaseModel):
@@ -36,8 +32,62 @@ class OrderSchema(BaseModel):
 
 
 class SupportedUpdateFieldsSchema(BaseModel):
-    quantity: int | None = Field(None, gt=0),
+    quantity: int | None = Field(None, gt=0)
     status: StatusType | None = None
+
+
+async def lifespan(app: FastAPI):
+    try:
+        with open(PRODUCTS_PATH, "r") as file:
+            initial_products = json.load(file)
+            products_loaded = 0
+            for item in initial_products:
+                validated_product = ProductSchema(**item)
+                product = Product(
+                    id=validated_product.id,
+                    name=validated_product.name,
+                    price=validated_product.price,
+                    stock=validated_product.stock,
+                )
+                if products_tree.insert(product):
+                    products_loaded += 1
+            print(f"{products_loaded} products loaded successfully")
+    except FileNotFoundError:
+        print("File not found, starting with empty products list")
+    except Exception as e:
+        print(f"Error loading products: {str(e)}")
+
+    try:
+        with open(ORDERS_PATH, "r") as file:
+            initial_orders = json.load(file)
+            for item in initial_orders:
+                valid_order = OrderSchema(**item)
+                if not products_tree.search_by_id(valid_order.product_id):
+                    print(f"""WARNING: Order {
+                          valid_order.id} skipped - Product {valid_order.product_id} not found""")
+                    continue
+                order = Order(
+                    id=valid_order.id,
+                    product_id=valid_order.product_id,
+                    quantity=valid_order.quantity,
+                    status=valid_order.status.value if valid_order.status else StatusType.PENDING.value
+                )
+                orders_list.add(order.id, order)
+            print(f"{orders_list.length} orders loaded successfully")
+    except FileNotFoundError:
+        print("File not found, starting with empty orders list")
+    except Exception as e:
+        print(f"Error loading orders: {str(e)}")
+
+    yield
+
+
+app = FastAPI(title='Products API', lifespan=lifespan)
+
+
+@app.get("/")
+def root():
+    return {"message": "Hello world!"}
 
 
 # Create products
@@ -133,9 +183,8 @@ def update_order(order_id: int, update_fields: SupportedUpdateFieldsSchema):
     if update_fields.quantity is not None:
         current_order.quantity = update_fields.quantity
     if update_fields.status is not None:
-        current_order.status = update_fields.status
+        current_order.status = update_fields.status.value
 
-    print(current_order.to_dict())
     if not orders_list.update(current_order.id, current_order):
         raise HTTPException(
             status_code=500,
@@ -168,7 +217,7 @@ def delete_order(order_id: int):
 
 
 # List all orders
-@app.get("/api/orders/")
+@app.get("/api/orders")
 def get_all_orders():
     orders = orders_list.get_all()
     return {
