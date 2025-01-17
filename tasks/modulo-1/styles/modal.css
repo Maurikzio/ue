@@ -1,0 +1,124 @@
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.modal {
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 24px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 350px;
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+
+  .close-modal {
+    border: 1px solid transparent;
+    padding: 0px 6px;
+    border-radius: 6px;
+
+    &:hover {
+      border: 1px solid #e2e8f0;
+    }
+  }
+}
+
+.modal-footer {
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-body {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      /* align-items: flex-start; */
+      gap: 4px;
+
+      label {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      input,
+      textarea {
+        padding: 8px 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+
+        &::placeholder {
+          font-size: 14px;
+        }
+      }
+
+      textarea {
+        resize: none;
+      }
+
+      .helper-text {
+        color: #64748b;
+        font-size: 12px;
+      }
+    }
+
+    .field.error {
+      input,
+      textarea {
+        border-color: #dc3545;
+      }
+
+      label {
+        color: #dc3545;
+      }
+    }
+
+    input[type=submit] {
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+
+  .success-message {
+    color: #9b87f5;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 8px;
+    display: none;
+  }
+
+  .success-message.show {
+    display: block;
+  }
+}
