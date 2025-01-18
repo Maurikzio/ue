@@ -118,6 +118,7 @@
         if (difference === 0) {
           showMessage("Hemos alcanzado exactamente la meta del proyecto. \n Gracias por tu contribución!");
           contributeBtn.disabled = true;
+          clearInterval(clockInterval);
         } else if (difference < 0) {
           const excess = Math.abs(difference);
           const actualContribution = contribution - excess;
@@ -129,6 +130,7 @@
             Gracias por tu contribución!
           `);
           contributeBtn.disabled = true;
+          clearInterval(clockInterval);
         }
 
         const newPercentage = Math.round((newCollected / totalGoal) * 100);
@@ -226,7 +228,7 @@
         return timeInterval;
       }
 
-      initClock(2)
+      const clockInterval = initClock(2)
     })
   </script>
 </body>
