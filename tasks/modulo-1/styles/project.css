@@ -66,9 +66,49 @@ body {
 
     .project-contribute {
       margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .actions {
+        display: flex;
+        gap: 24px;
+      }
+
+      .field {
+        display: flex;
+        height: 40px;
+        align-items: center;
+        gap: 8px;
+
+        input {
+          padding: 8px 12px;
+          border: 1px solid #e2e8f0;
+          border-radius: 4px;
+
+          &::placeholder {
+            font-size: 14px;
+          }
+        }
+      }
 
       button {
         width: 100%;
+        border-radius: 6px;
+
+        &:disabled {
+          background-color: #c1b7ed;
+          cursor: not-allowed;
+        }
+      }
+
+      p {
+        white-space: pre-line;
+        line-height: 16px;
+        font-size: 14px;
+        color: #9b87f5;
+        background-color: #f9fafb;
+        padding: 8px;
         border-radius: 6px;
       }
     }
