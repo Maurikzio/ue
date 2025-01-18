@@ -130,7 +130,14 @@
 
     .card-header {
       height: 55px;
+      a {
+        text-decoration: none;
+        color: #000000;
 
+        &:hover {
+          color: #694af6;
+        }
+      }
       h3 {
         margin-bottom: 6px;
       }
