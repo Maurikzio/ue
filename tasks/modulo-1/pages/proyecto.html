@@ -51,9 +51,15 @@
           <p><span id="funded">37</span> %</p>
           <p>financiado</p>
         </div>
-        <div>
-          <p>15</p>
-          <p>días restantes</p>
+        <div class="time-info">
+          <div>
+            <p>15</p>
+            <p>días restantes</p>
+          </div>
+          <div id="time-remaining">48 horas
+            59 minutos
+            59 segundos
+          </div>
         </div>
       </div>
       <div class="project-contribute">
@@ -118,8 +124,8 @@
           newCollected = totalGoal;
 
           showMessage(`La meta del proyecto es: ${formatNumber(totalGoal)},
-            Tu contribución de ${formatNumber(contribution)} excede la meta por ${formatNumber(excess)}.
-            Aceptaremos solamente ${formatNumber(actualContribution)}.
+            Tu contribución de $${formatNumber(contribution)} excede la meta por $${formatNumber(excess)}.
+            Aceptaremos solamente $${formatNumber(actualContribution)}.
             Gracias por tu contribución!
           `);
           contributeBtn.disabled = true;
@@ -187,6 +193,40 @@
         currentIndex += 1;
         changeImage(currentIndex);
       });
+
+      const timeElement = document.getElementById('time-remaining');
+      function getTimeRemaining(endTime) {
+        const total = Date.parse(endTime) - Date.parse(new Date());
+        const seconds = Math.floor((total / 1000) % 60);
+        const minutes = Math.floor((total / 1000 / 60) % 60);
+        const hours = Math.floor((total / (1000 * 60 * 60)));
+
+        return { total, seconds, minutes, hours }
+      }
+
+      function initClock(daysRemaining) {
+        const endTime = new Date(Date.now() + daysRemaining * 24 * 60 * 60 * 1000);
+
+        function updateClock() {
+          const rT = getTimeRemaining(endTime);
+
+          if (rT.total <= 0) {
+            clearInterval(timeInterval)
+            return;
+          }
+
+          timeElement.textContent = `${rT.hours} horas
+          ${rT.minutes} minutos
+          ${rT.seconds} segundos
+          `;
+
+        }
+        updateClock();
+        const timeInterval = setInterval(updateClock, 1000);
+        return timeInterval;
+      }
+
+      initClock(2)
     })
   </script>
 </body>
