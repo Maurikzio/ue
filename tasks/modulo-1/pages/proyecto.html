@@ -23,8 +23,12 @@
     </a>
   </div>
   <div class="container">
-    <section>
-      <img src="../assets/tech-learn.jpg" alt="TechLearn">
+    <section class="project-image">
+      <div class="overlay">
+        <button id="prevBtn">≪</button>
+        <button id="nextBtn">≫</button>
+      </div>
+      <img src="../assets/tech-learn.jpg" alt="TechLearn" id="project-image">
     </section>
     <section class="project-info">
       <h1>TechLearn: Educación para todos</h1>
@@ -147,6 +151,42 @@
 
         input.value = '';
       })
+
+
+      // Carousel de imagenes
+      const images = [
+        "../assets/tech-learn.jpg",
+        "../assets/eco-harvest.jpg",
+        "../assets/hero-bg.jpg",
+        "../assets/kids-code.jpg",
+        "../assets/sound-lab.jpg"
+      ];
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      let currentIndex = 0;
+
+      function changeImage(currentIdx) {
+        const projectImage = document.getElementById('project-image');
+        const currentImage = images[currentIdx];
+        projectImage.setAttribute('src', currentImage);
+      }
+
+      prevBtn.addEventListener('click', function () {
+        if (currentIndex === 0) {
+          return
+        }
+        currentIndex -= 1;
+        changeImage(currentIndex);
+      });
+
+      nextBtn.addEventListener('click', function () {
+        if (currentIndex === images.length - 1) {
+          return
+        }
+        currentIndex += 1;
+        changeImage(currentIndex);
+      });
     })
   </script>
 </body>

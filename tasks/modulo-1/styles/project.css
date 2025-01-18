@@ -8,7 +8,7 @@ body {
   display: flex;
   flex: 1;
   gap: 24px;
-
+  max-height: calc(100vh - 50px);
 
   section {
     flex: 1;
@@ -18,10 +18,44 @@ body {
       height: 100%;
       max-width: 100%;
       object-fit: cover;
+      flex-shrink: 0;
     }
 
     h1 {
       font-size: 36px;
+    }
+  }
+
+  .project-image {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    min-height: 0;
+
+    .overlay {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      box-sizing: border-box;
+
+
+      button {
+        color: #ffffff;
+        font-size: 24px;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, .5);;
+
+        &:hover {
+          background-color: #6a4af6;
+        }
+      }
     }
   }
 
