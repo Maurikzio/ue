@@ -24,7 +24,7 @@
   }
 
   h1 {
-    font-size: 72px;
+    font-size: 48px;
     margin-bottom: 24px;
     background-image: linear-gradient(to right, #111827, #9b87f5);
     -webkit-background-clip: text;
@@ -32,7 +32,7 @@
   }
 
   p {
-    font-size: 24px;
+    font-size: 16px;
     margin-bottom: 32px;
     color: #4b5563;
   }
@@ -60,6 +60,7 @@
   .content {
     margin-top: 64px;
     display: flex;
+    flex-direction: column;
     gap: 48px;
   }
 
@@ -94,6 +95,7 @@
 
   .content {
     display: flex;
+    flex-direction: column;
     gap: 32px;
   }
 
@@ -233,5 +235,32 @@ footer {
     margin-top: 48px;
     padding-top: 32px;
     text-align: center;
+  }
+}
+
+
+@media only screen and (min-width: 450px) {
+  .hero {
+    h1 {
+      font-size: 72px;
+    }
+
+    p {
+      font-size: 24px;
+    }
+  }
+
+  .how-it-works {
+    .content {
+      flex-direction: row;
+    }
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .top-projects {
+    .content {
+      flex-direction: row;
+    }
   }
 }

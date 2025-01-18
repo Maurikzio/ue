@@ -27,36 +27,7 @@ body {
   }
 
   .project-image {
-    position: relative;
-    display: flex;
-    overflow: hidden;
-    min-height: 0;
-
-    .overlay {
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px;
-      box-sizing: border-box;
-
-
-      button {
-        color: #ffffff;
-        font-size: 24px;
-        padding: 8px;
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, .5);;
-
-        &:hover {
-          background-color: #6a4af6;
-        }
-      }
-    }
+    display: none;
   }
 
   .project-info {
@@ -172,6 +143,44 @@ body {
         font-size: 16px;
         line-height: 1.6;
         color: #4b5563;
+      }
+    }
+  }
+}
+
+
+@media only screen and (min-width: 769px) {
+  .container {
+    .project-image {
+      position: relative;
+      display: flex;
+      overflow: hidden;
+      min-height: 0;
+
+      .overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        box-sizing: border-box;
+
+
+        button {
+          color: #ffffff;
+          font-size: 24px;
+          padding: 8px;
+          border-radius: 8px;
+          border: 1px solid rgba(255, 255, 255, .5);;
+
+          &:hover {
+            background-color: #6a4af6;
+          }
+        }
       }
     }
   }
