@@ -416,13 +416,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const { temperaturesDuringDay } = dayInfo;
 
     const visiblePoints = [];
-    const chartPoints = ["-1, 100", `-1, ${100 - (temperaturesDuringDay[0].temperature * 3)}`];
+    const chartPoints = ["-10, 100", `-10, ${100 - (temperaturesDuringDay[0].temperature * 3)}`];
 
     for (let i = 0; i < temperaturesDuringDay.length; i++) {
       const x = 75 * i;
       const y = 100 - (temperaturesDuringDay[i].temperature * 3);
       chartPoints.push(`${x},${y}`);
-      visiblePoints.push({ x, y });
+      visiblePoints.push({ x, y, temperature: temperaturesDuringDay[i].temperature });
     }
     chartPoints.push(`${temperaturesDuringDay.length * 75},100`);
 
@@ -435,8 +435,18 @@ document.addEventListener('DOMContentLoaded', function () {
       />`
     ).join('');
 
+    const temperatures = visiblePoints.map(point =>
+      `<text
+          x="${point.x}"
+          y="${point.y - 10}"
+          text-anchor="middle"
+          fill="rgb(255, 204, 0)"
+          font-size="12px"
+      >${point.temperature}°</text>`
+    ).join("");
+
     chartContent.innerHTML = `
-      <svg width="540" height="99" overflow="hidden" >
+      <svg width="540" height="99" overflow="hidden" viewBox="-7 0 540 99">
         <polygon
           points="${chartPoints}"
           fill="rgba(255, 204, 0, 0.2)"
@@ -444,6 +454,7 @@ document.addEventListener('DOMContentLoaded', function () {
           stroke-width="2"
         />
         ${circles}
+        ${temperatures}
       </svg>
     `;
 
