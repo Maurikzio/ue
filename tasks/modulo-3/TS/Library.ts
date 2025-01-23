@@ -7,6 +7,20 @@ interface Borrowable {
   dueDate: Date;
 }
 
+function LogOperation(operation: string) {
+  return function (target: any, propertyName: string, descriptor: PropertyDescriptor) {
+    const originalMethod = descriptor.value;
+
+    descriptor.value = function (...args: any[]) {
+      const userId = args[0];
+      const title = args[1];
+      const result = originalMethod.apply(this, args);
+      console.log(`[${new Date().toISOString()}] -  User: ${userId}, ${operation}, Book: "${title}", Sucess: ${result}`);
+      return result;
+    }
+  }
+}
+
 class Library {
   private name: string;
   private books: Book[] = [];
@@ -28,7 +42,8 @@ class Library {
     return this.books.find(book => book.getTitle() === title);
   }
 
-  borrowBook(userId: string, title: string): Book {
+  @LogOperation("BORROW")
+  borrowBook(userId: string, title: string): boolean {
     if (!this.users.has(userId)) {
       throw new Error("User not registered");
     }
@@ -48,9 +63,10 @@ class Library {
 
     this.borrowedBooks.set(userId, userBorrowings);
     book.decreaseAvailableCopies()
-    return book;
+    return true;
   }
 
+  @LogOperation("RETURN")
   returnBook(userId: string, title: string): boolean {
     const userBorrowings = this.borrowedBooks.get(userId);
 
@@ -114,9 +130,9 @@ const seedUsers = [
 seedBooks.forEach(book => myLibrary.addBook(book));
 seedUsers.forEach(({ name, lastName, id }) => myLibrary.registerUser(name, lastName, id))
 
-myLibrary.borrowBook("AG01", "Don Quijote");
-myLibrary.borrowBook("AG01", "1984");
-myLibrary.printBorrows();
-myLibrary.returnBook("AG01", "Don Quijote");
-myLibrary.printBorrows();
+// myLibrary.borrowBook("Az01", "Don Quijote");
+// myLibrary.borrowBook("AG01", "1984");
+// myLibrary.printBorrows();
+// myLibrary.returnBook("AZ01", "1984");
+// myLibrary.printBorrows();
 
