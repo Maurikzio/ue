@@ -1,5 +1,6 @@
 import { Book } from "./Book";
 import { User } from "./User";
+import * as readline from 'readline';
 
 interface Borrowable {
   book: Book;
@@ -50,7 +51,11 @@ class Library {
 
     const book = this.findBookByTitle(title);
 
-    if (!book || !book?.isAvailable()) {
+    if (!book) {
+      return false
+    }
+
+    if (!book?.isAvailable()) {
       throw new Error("Book is not available");
     }
 
@@ -112,6 +117,11 @@ class Library {
   }
 }
 
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
 const myLibrary = new Library("ABC");
 const seedBooks = [
   new Book("Don Quijote", "Miguel de Cervantes", 1605, "Classic", 5),
@@ -136,3 +146,65 @@ seedUsers.forEach(({ name, lastName, id }) => myLibrary.registerUser(name, lastN
 // myLibrary.returnBook("AZ01", "1984");
 // myLibrary.printBorrows();
 
+function askQuestion(query: string): Promise<string> {
+  return new Promise(resolve => rl.question(query, resolve));
+} 6
+
+async function showMenu() {
+  while (true) {
+    console.log(`
+ 1. Registrar usuario
+ 2. Pedir libro
+ 3. Devolver libro
+ 4. Ver libros disponibles
+ 5. Ver préstamos
+ 6. Salir
+ `);
+    const answer = await askQuestion("Seleccione una opción: ");
+
+    switch (answer) {
+      case "1":
+        const name = await askQuestion("Nombre: ");
+        const lastName = await askQuestion("Apellido: ");
+        const id = await askQuestion("ID: ");
+        myLibrary.registerUser(name, lastName, id);
+        console.log("Usuario registrado");
+        break;
+
+      case "2":
+        const borrowUserId = await askQuestion("ID de usuario: ");
+        const borrowTitle = await askQuestion("Título del libro: ");
+        if (myLibrary.borrowBook(borrowUserId, borrowTitle)) {
+          console.log("Libro prestado exitosamente");
+        } else {
+          console.log("No se pudo prestar el libro");
+        }
+        break;
+
+      case "3":
+        const returnUserId = await askQuestion("ID de usuario: ");
+        const returnTitle = await askQuestion("Título del libro: ");
+        if (myLibrary.returnBook(returnUserId, returnTitle)) {
+          console.log("Libro devuelto exitosamente");
+        } else {
+          console.log("No se pudo devolver el libro");
+        }
+        break;
+
+      case "4":
+        myLibrary.printBooks();
+        break;
+
+      case "5":
+        myLibrary.printBorrows();
+        break;
+
+      case "6":
+        rl.close();
+        return;
+    }
+  }
+}
+
+
+showMenu();
