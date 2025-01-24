@@ -43,3 +43,22 @@ export class Book {
     return this.availableCopies > 0;
   }
 };
+
+export class HorrorBook extends Book {
+  numberOfPeopleFainted: number = 0;
+
+  constructor(title: string, author: string, yearOfPublication: number, availableCopies: number) {
+    super(title, author, yearOfPublication, "Horror", availableCopies)
+  }
+
+  increaseNumberOfPeopleFainted() {
+    this.numberOfPeopleFainted++;
+  }
+
+  override getBookInformation(): string {
+    const originalInfo = super.getBookInformation();
+    return `${originalInfo}
+      People Fainted: ${this.numberOfPeopleFainted}
+    `
+  }
+}

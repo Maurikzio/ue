@@ -1,4 +1,4 @@
-import { Book } from "./Book";
+import { Book, HorrorBook } from "./Book";
 import { User } from "./User";
 import * as readline from 'readline';
 
@@ -131,6 +131,12 @@ const seedBooks = [
   new Book("The Lord of the Rings", "J.R.R. Tolkien", 1954, "Fantasy", 3)
 ];
 
+const horrorBooksSeed = [
+  new HorrorBook("The Shining", "Stephen King", 1977, 3),
+  new HorrorBook("Dracula", "Bram Stoker", 1897, 4),
+  new HorrorBook("House of Leaves", "Mark Z. Danielewski", 2000, 2)
+];
+
 const seedUsers = [
   { name: "Ana", lastName: "García", id: "AG01" },
   { name: "Carlos", lastName: "López", id: "CL02" },
@@ -138,6 +144,7 @@ const seedUsers = [
 ];
 
 seedBooks.forEach(book => myLibrary.addBook(book));
+horrorBooksSeed.forEach(hBook => myLibrary.addBook(hBook))
 seedUsers.forEach(({ name, lastName, id }) => myLibrary.registerUser(name, lastName, id))
 
 // myLibrary.borrowBook("Az01", "Don Quijote");
