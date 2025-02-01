@@ -85,7 +85,7 @@ class SpotifyService:
                 items = data.get("tracks", {}).get("items", [])
 
                 if not items:
-                    return {"error": "Genre not found"}
+                    return Response({"error": "Genre not found!"}, status=status.HTTP_404_NOT_FOUND)
 
                 top_songs = [
                     {
@@ -122,7 +122,7 @@ class SpotifyService:
                 data = response.json()
                 items = data.get("tracks", {}).get("items", [])
                 if not items:
-                    return {"error": "Track not found"}
+                    return Response({"error": "Track not found!"}, status=status.HTTP_404_NOT_FOUND)
 
                 track_data = items[0]
                 return {
