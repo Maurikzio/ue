@@ -2,6 +2,7 @@ import requests
 from django.conf import settings
 from rest_framework.response import Response
 from rest_framework import status
+from datetime import datetime, timedelta
 
 
 class SpotifyService:
@@ -9,8 +10,12 @@ class SpotifyService:
         self.client_id = settings.SPOTIFY_CLIENT_ID
         self.client_secret = settings.SPOTIFY_CLIENT_SECRET
         self.token = None
+        self.token_expire = None
 
     def get_token(self):
+        if self.token and self.token_expire > datetime.now():
+            return self.token
+
         url = "https://accounts.spotify.com/api/token"
         headers = {
             "Content-Type": 'application/x-www-form-urlencoded'
@@ -23,6 +28,8 @@ class SpotifyService:
         if response.status_code == 200:
             data = response.json()
             self.token = data["access_token"]
+            self.token_expire = datetime.now(
+            ) + timedelta(seconds=data['expires_in'])
             return self.token
 
         raise Exception("Failed to get Spotify token :/")
