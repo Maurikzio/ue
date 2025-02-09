@@ -8,7 +8,12 @@ class CustomUserAdmin(UserAdmin):
         ('Additional information ', {'fields': ('phone',)}),
     )
 
-    list_display = ('email', 'username', 'phone', 'is_staff')
+    def get_groups(self, obj):
+        return ", ".join([group.name for group in obj.groups.all()])
+
+    get_groups.short_description = 'Groups'
+
+    list_display = ('email', 'username', 'phone', 'is_staff', 'get_groups')
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
