@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Service, Appointment
+from django.contrib.auth.models import Group
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -20,3 +21,11 @@ class AppointmentSerializer(serializers.ModelSerializer):
             'status',
             'notes'
         ]
+
+    def validate_doctor(self, value):
+        doctors_group = Group.objects.get(name="Doctores")
+        if not value.groups.filter(id=doctors_group.id).exists():
+            raise serializers.ValidationError(
+                "Invalid doctor"
+            )
+        return value
