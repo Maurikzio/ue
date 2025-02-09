@@ -49,3 +49,29 @@ class AppointmentAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, appointment_id):
+        if not request.user.groups.filter(name="Administradores").exists():
+            return Response(
+                {'error': "Only admin can update status of appointments"},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        try:
+            appointment = Appointment.objects.get(id=appointment_id)
+        except Appointment.DoesNotExist:
+            return Response(
+                {'error': "Appointment not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = AppointmentSerializer(
+            appointment,
+            data={'status': request.data.get('status')},
+            partial=True
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

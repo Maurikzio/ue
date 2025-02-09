@@ -7,5 +7,7 @@ router.register(r'services', ServiceViewSet)
 
 urlpatterns = [
     path('appointments/', AppointmentAPIView.as_view(), name="appointments"),
+    path('appointments/<int:appointment_id>/',
+         AppointmentAPIView.as_view(), name="appointment-update")
 ]
 urlpatterns += router.urls
