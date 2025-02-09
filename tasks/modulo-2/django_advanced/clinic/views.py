@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import ServiceSerializer, AppointmentSerializer
 from .models import Service, Appointment
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -16,6 +16,10 @@ class ServiceViewSet(viewsets.ModelViewSet):
 
 
 class AppointmentAPIView(APIView):
+    # DjangoModelPermissions necesita el queryset inclusive si no es un viewset
+    queryset = Appointment.objects.all()
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         #  Si es Admin, ve todas las citas
         if request.user.groups.filter(name="Administradores").exists():
