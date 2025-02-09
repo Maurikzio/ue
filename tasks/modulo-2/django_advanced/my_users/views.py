@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from django.contrib.auth.models import Group
 from .serializers import CustomUserSerializer
 
@@ -43,3 +43,21 @@ class RegisterAdminAPIView(APIView):
             user.groups.add(admin_group)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ListDoctorsAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        doctors_group = Group.objects.get(name="Doctores")
+        doctors = doctors_group.user_set.all()
+        data = [
+            {
+                "id": doctor.id,
+                "full_name": f"{doctor.first_name} {doctor.last_name}",
+                "email": doctor.email,
+                "phone": doctor.phone
+            }
+            for doctor in doctors
+        ]
+        return Response(data)
