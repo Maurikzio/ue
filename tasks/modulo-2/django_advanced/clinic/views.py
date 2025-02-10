@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.generics import UpdateAPIView
+from rest_framework.generics import UpdateAPIView, ListAPIView
 
 
 class ServiceViewSet(viewsets.ModelViewSet):
@@ -92,3 +92,9 @@ class UpdateAppointmentStatusAPIView(UpdateAPIView):
 
     def perform_update(self, serializer):
         serializer.save(status=self.request.data.get('status'))
+
+
+class ListAppointmentsAPIView(ListAPIView):
+    serializer_class = AppointmentSerializer
+    queryset = Appointment.objects.all()
+    permission_classes = [IsAdminGroup]
