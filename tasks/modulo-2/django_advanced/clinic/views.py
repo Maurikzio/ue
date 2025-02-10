@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import ServiceSerializer, AppointmentSerializer
+from .serializers import ServiceSerializer, AppointmentSerializer, UpdateAppointmentStatusSerializer
 from .models import Service, Appointment
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.generics import UpdateAPIView
 
 
 class ServiceViewSet(viewsets.ModelViewSet):
@@ -75,3 +76,19 @@ class AppointmentAPIView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class IsAdminGroup(BasePermission):
+    def has_permission(self, request, view):
+        if not request.user.is_authenticated:
+            return False
+        return request.user.groups.filter(name="Administradores")
+
+
+class UpdateAppointmentStatusAPIView(UpdateAPIView):
+    serializer_class = UpdateAppointmentStatusSerializer
+    queryset = Appointment.objects.all()
+    permission_classes = [IsAdminGroup]
+
+    def perform_update(self, serializer):
+        serializer.save(status=self.request.data.get('status'))

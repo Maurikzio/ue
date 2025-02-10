@@ -29,3 +29,9 @@ class AppointmentSerializer(serializers.ModelSerializer):
                 "Invalid doctor"
             )
         return value
+
+
+class UpdateAppointmentStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Appointment
+        fields = ['status']
