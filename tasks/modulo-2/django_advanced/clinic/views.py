@@ -9,6 +9,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import UpdateAPIView, ListAPIView
 
+from rest_framework.decorators import api_view, permission_classes
+from django.db.models import Count
+
 
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
@@ -98,3 +101,13 @@ class ListAppointmentsAPIView(ListAPIView):
     serializer_class = AppointmentSerializer
     queryset = Appointment.objects.all()
     permission_classes = [IsAdminGroup]
+
+
+@api_view(['GET'])
+@permission_classes([IsAdminGroup])
+def most_booked_service(request):
+    appointment = Appointment.objects.values('service__name', 'service__id')\
+        .annotate(appointment_count=Count('id'))\
+        .order_by('-appointment_count')[:1]
+
+    return Response(appointment)
