@@ -4,20 +4,24 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from django.contrib.auth.models import Group
 from .serializers import CustomUserSerializer, DoctorSerializer
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from .models import CustomUser
 
 
-class RegisterPatientAPIView(APIView):
-    # Los usuarios sin grupo seran tratados como pacientes
-    permission_classes = [AllowAny]
+# class RegisterPatientAPIView(APIView):
+#     # Los usuarios sin grupo seran tratados como pacientes
+#     permission_classes = [AllowAny]
 
-    def post(self, request):
-        serializer = CustomUserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def post(self, request):
+#         serializer = CustomUserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class RegisterPatientAPIView(CreateAPIView):
+    serializer_class = CustomUserSerializer
+    permission_classes = [AllowAny]
 
 
 class RegisterDoctorAPIView(APIView):
