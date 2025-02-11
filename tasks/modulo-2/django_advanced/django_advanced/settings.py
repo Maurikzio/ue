@@ -91,8 +91,14 @@ WSGI_APPLICATION = "django_advanced.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "djangoadvanced",
+        "USER": "uem_user",
+        "PASSWORD": "Maurici0!",
+        "HOST": "localhost",
+        "PORT": "3306",
     }
 }
 
