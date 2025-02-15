@@ -27,7 +27,7 @@ modulo-2
 ```
 Dirigirse al directorio:
 ```bash
-cd tasks/modulo-2/django_advanced
+cd tasks/modulo-2/django_spotify
 ```
 
 Configura las variables de entorno en un archivo `.env`:
