@@ -56,6 +56,26 @@ POST /users/
     "name": "John Doe",
     "email": "john@example.com"
 }
+
+# Listar usuarios
+GET /users/
+[
+  {
+    "id": 1,
+    "name": "David Guetta",
+    "email": "iamdavid@gmail.com"
+  },
+  {
+    "id": 2,
+    "name": "Maria Osorio",
+    "email": "mariaoso@gmail.com"
+  },
+  {
+    "id": 4,
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+]
 ```
 
 ### Preferencias
