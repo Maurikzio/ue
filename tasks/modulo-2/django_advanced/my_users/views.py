@@ -70,7 +70,7 @@ class RegisterAdminAPIView(APIView):
 
 class ListDoctorsAPIView(ListAPIView):
     serializer_class = DoctorSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         return CustomUser.objects.filter(groups__name='Doctores')
