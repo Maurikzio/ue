@@ -13,10 +13,17 @@ from rest_framework.decorators import api_view, permission_classes
 from django.db.models import Count
 
 
+class IsAdminGroup(BasePermission):
+    def has_permission(self, request, view):
+        if not request.user.is_authenticated:
+            return False
+        return request.user.groups.filter(name="Administradores")
+
+
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminGroup]
 
 
 class AppointmentAPIView(APIView):
@@ -79,13 +86,6 @@ class AppointmentAPIView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class IsAdminGroup(BasePermission):
-    def has_permission(self, request, view):
-        if not request.user.is_authenticated:
-            return False
-        return request.user.groups.filter(name="Administradores")
 
 
 class UpdateAppointmentStatusAPIView(UpdateAPIView):
