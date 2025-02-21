@@ -34,6 +34,15 @@ class Library {
     this.books.push(book);
   }
 
+  removeBook(bookTitle: string): boolean {
+    const bookToRemove = this.books.find(book => book.getTitle() === bookTitle);
+    if (!bookToRemove) {
+      return false;
+    }
+    this.books = this.books.filter(book => book.getTitle() !== bookTitle);
+    return true;
+  }
+
   registerUser(name: string, lastName: string, id: string) {
     const newUser = new User(name, lastName, id)
     this.users.set(id, newUser);
@@ -46,7 +55,8 @@ class Library {
   @LogOperation("BORROW")
   borrowBook(userId: string, title: string): boolean {
     if (!this.users.has(userId)) {
-      throw new Error("User not registered");
+      console.error("User not registered");
+      return false;
     }
 
     const book = this.findBookByTitle(title);
@@ -56,7 +66,8 @@ class Library {
     }
 
     if (!book?.isAvailable()) {
-      throw new Error("Book is not available");
+      console.error("Book is not available");
+      return false;
     }
 
     const userBorrowings = this.borrowedBooks.get(userId) || [];
@@ -163,9 +174,10 @@ async function showMenu() {
  1. Registrar usuario
  2. Pedir libro
  3. Devolver libro
- 4. Ver libros disponibles
- 5. Ver préstamos
- 6. Salir
+ 4. Eliminar libro
+ 5. Ver libros disponibles
+ 6. Ver préstamos
+ 7. Salir
  `);
     const answer = await askQuestion("Seleccione una opción: ");
 
@@ -199,14 +211,23 @@ async function showMenu() {
         break;
 
       case "4":
-        myLibrary.printBooks();
+        const bookTitle = await askQuestion('Titulo del libro a eliminar:');
+        if (myLibrary.removeBook(bookTitle)) {
+          myLibrary.printBooks();
+        } else {
+          console.log('Libro no pudo ser eliminado');
+        }
         break;
 
       case "5":
-        myLibrary.printBorrows();
+        myLibrary.printBooks();
         break;
 
       case "6":
+        myLibrary.printBorrows();
+        break;
+
+      case "7":
         rl.close();
         return;
     }
