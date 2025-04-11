@@ -2,12 +2,25 @@ import { Play, Star } from "lucide-react";
 import { Button } from "./ui/Button";
 import { Image } from "./ui/Image";
 
-export default function MovieCard() {
+export default function MovieCard({ movie = {} }) {
+  const {
+    poster_path,
+    original_title,
+    release_date,
+    vote_average = 0,
+  } = movie;
+
+  const releaseYear = release_date?.split('-')?.[0] || " ";
+  const imgSrc = poster_path
+    ? `https://image.tmdb.org/t/p/w300${poster_path}`
+    : "https://placehold.co/300x450";
+
+
   return (
     <div className="group cursor-pointer">
       <div className="relative aspect-[2/3] overflow-hidden rounded-lg mb-2">
         <Image
-          src="https://placehold.co/300x450"
+          src={imgSrc}
           alt="Movie poster"
           fill
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -18,12 +31,12 @@ export default function MovieCard() {
           </Button>
         </div>
       </div>
-      <h3 className="font-medium truncate">Movie Title</h3>
+      <h3 className="font-medium truncate">{original_title}</h3>
       <div className="flex items-center text-sm text-gray-400">
         <Star className="h-3 w-3 text-yellow-500 mr-1" />
-        <span>8.5</span>
+        <span>{vote_average}</span>
         <span className="mx-2">•</span>
-        <span>2023</span>
+        <span>{releaseYear}</span>
       </div>
     </div>
   );
