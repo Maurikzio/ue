@@ -2,11 +2,21 @@
 // import viteLogo from '/vite.svg';
 // import './App.css';
 
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import MainHero from "./components/MainHero";
+import NewReleases from "./components/NewReleases";
+import PopularMovies from "./components/PopularMovies";
+
 function App() {
   return (
-    <h1 className="text-3xl font-bold underline bg-red-500">
-      Hello world!
-    </h1>
+    <div className="min-h-screen text-white">
+      <Header />
+      <MainHero />
+      <PopularMovies />
+      <NewReleases />
+      <Footer />
+    </div>
   );
 }
 
