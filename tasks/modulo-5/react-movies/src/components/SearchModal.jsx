@@ -48,7 +48,7 @@ export function SearchModal({ isOpen, onClose }) {
           <Input
             ref={inputRef}
             type="search"
-            placeholder="Search for movies..."
+            placeholder="Buscar película..."
             className="pl-10 bg-gray-800 border-gray-700"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
