@@ -4,7 +4,8 @@ const {
   VITE_SECRET_TOKEN,
   VITE_POPULAR_MOVIES_URL,
   VITE_UPCOMING_MOVIES_URL,
-  VITE_SEARCH_MOVIE_URL
+  VITE_SEARCH_MOVIE_URL,
+  VITE_MOVIE_DETAILS_URL
 } = import.meta.env;
 
 export const useMovieStore = create((set, get) => ({
@@ -12,6 +13,7 @@ export const useMovieStore = create((set, get) => ({
   upcomingMovies: [],
   currentMovie: null,
   movieSearchResults: [],
+  movieDetails: {},
   resetMovieSearchResults: () => {
     set({ movieSearchResults: [] });
   },
@@ -63,6 +65,23 @@ export const useMovieStore = create((set, get) => ({
       const response = await fetch(url, options);
       const data = await response.json();
       set({ movieSearchResults: data?.results });
+    } catch (error) {
+      console.error("Error ->", error);
+    }
+  },
+  fetchMovieDetails: async (movieId = '') => {
+    try {
+      const url = `${VITE_MOVIE_DETAILS_URL}${movieId}?append_to_response=credits`;
+      const options = {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: VITE_SECRET_TOKEN
+        }
+      };
+      const response = await fetch(url, options);
+      const data = await response.json();
+      set({ movieDetails: data });
     } catch (error) {
       console.error("Error ->", error);
     }
