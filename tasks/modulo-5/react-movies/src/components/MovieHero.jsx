@@ -26,7 +26,7 @@ export default function MovieHero({
 
         {/* Movie Info */}
         <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 flex flex-col md:flex-row gap-8">
-          <div className="w-[250px] h-[375px]">
+          <div className="w-[250px] h-[375px] hidden md:block">
             <Image
               // src="https://placehold.co/500x750"
               src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : "https://placehold.co/500x750"}
