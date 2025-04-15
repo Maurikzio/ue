@@ -8,13 +8,14 @@ const {
   VITE_MOVIE_DETAILS_URL
 } = import.meta.env;
 
-export const useMovieStore = create((set, get) => ({
+export const useMovieStore = create((set) => ({
   popularMovies: [{}],
   upcomingMovies: [],
   currentMovie: null,
   movieSearchResults: [],
   movieDetails: {},
   isLoadingMovieDetails: false,
+  isSearching: false,
   movieDetailsError: null,
   resetMovieSearchResults: () => {
     set({ movieSearchResults: [] });
@@ -56,6 +57,8 @@ export const useMovieStore = create((set, get) => ({
   },
   searchMovie: async (movieName = '') => {
     try {
+      set({ isSearching: true });
+
       const url = `${VITE_SEARCH_MOVIE_URL}${movieName}`;
       const options = {
         method: 'GET',
@@ -66,9 +69,13 @@ export const useMovieStore = create((set, get) => ({
       };
       const response = await fetch(url, options);
       const data = await response.json();
-      set({ movieSearchResults: data?.results });
+      set({
+        movieSearchResults: data?.results,
+        isSearching: false
+      });
     } catch (error) {
       console.error("Error ->", error);
+      set({ isSearching: false });
     }
   },
   fetchMovieDetails: async (movieId = '') => {
