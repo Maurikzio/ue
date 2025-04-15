@@ -2,6 +2,7 @@ import { Play, Star } from "lucide-react";
 import { Badge } from "./ui/Badge";
 import { Image } from "./ui/Image";
 import { Button } from "./ui/Button";
+import { Link } from "react-router";
 
 
 export default function MainHero({ movie }) {
@@ -11,6 +12,7 @@ export default function MainHero({ movie }) {
     overview,
     release_date,
     vote_average = 0,
+    id,
   } = movie;
 
   const releaseYear = release_date?.split('-')?.[0] || " ";
@@ -42,9 +44,9 @@ export default function MainHero({ movie }) {
             <Button className="bg-red-600 hover:bg-red-700">
               <Play className="mr-2 h-4 w-4" /> Watch Now
             </Button>
-            <Button variant="outline" className="border-white text-white hover:bg-white/10">
+            <Link to={`/movies/${id}`} className=" inline-flex items-center justify-center rounded-md border-white text-white hover:bg-white/10 px-2">
               More Info
-            </Button>
+            </Link>
           </div>
         </div>
       </div>

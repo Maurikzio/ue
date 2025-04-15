@@ -5,6 +5,7 @@ import { Input } from "./ui/Input";
 import useDebounce from "../lib/useDebounce";
 import { useMovieStore } from "../store/moviesStore";
 import { Image } from "./ui/Image";
+import { Link } from "react-router";
 
 export function SearchModal({ isOpen, onClose }) {
   const [query, setQuery] = useState("");
@@ -65,7 +66,7 @@ export function SearchModal({ isOpen, onClose }) {
           <ul className="divide-y divide-gray-800">
             {movieSearchResults?.map((movie) => (
               <li key={movie.id} className="p-4 hover:bg-gray-800 transition-colors cursor-pointer">
-                <div className="flex items-start">
+                <Link to={`/movies/${movie.id}`} className="flex items-start">
                   <div className="h-16 w-12 bg-gray-700 rounded mr-4 flex-shrink-0">
                     <Image
                       src={movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "https://placehold.co/300x450"}
@@ -84,7 +85,7 @@ export function SearchModal({ isOpen, onClose }) {
                     <Star className="h-4 w-4 mr-1 fill-current" />
                     <span>{movie.vote_average}</span>
                   </div>
-                </div>
+                </Link>
               </li>
             ))}
           </ul>
