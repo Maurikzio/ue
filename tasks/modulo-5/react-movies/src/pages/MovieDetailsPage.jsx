@@ -51,7 +51,6 @@ export default function MovieDetailsPage() {
       <MovieDetailsSection
         overview={overview}
         cast={cast.slice(0, 4)}
-        reviews={[]}
       />
     </div>
   );
