@@ -14,6 +14,8 @@ export const useMovieStore = create((set, get) => ({
   currentMovie: null,
   movieSearchResults: [],
   movieDetails: {},
+  isLoadingMovieDetails: false,
+  movieDetailsError: null,
   resetMovieSearchResults: () => {
     set({ movieSearchResults: [] });
   },
@@ -71,6 +73,18 @@ export const useMovieStore = create((set, get) => ({
   },
   fetchMovieDetails: async (movieId = '') => {
     try {
+      // Reset state before fetching
+      set({
+        isLoadingMovieDetails: true,
+        movieDetailsError: null,
+        movieDetails: {}
+      });
+
+      // Validate the movie ID is a number
+      if (isNaN(Number(movieId))) {
+        throw new Error('Invalid movie ID. ID must be a number.');
+      }
+
       const url = `${VITE_MOVIE_DETAILS_URL}${movieId}?append_to_response=credits`;
       const options = {
         method: 'GET',
@@ -79,12 +93,31 @@ export const useMovieStore = create((set, get) => ({
           Authorization: VITE_SECRET_TOKEN
         }
       };
+
       const response = await fetch(url, options);
+
+      // Handle API errors (like 404)
+      if (!response.ok) {
+        throw new Error(`Error fetching movie: ${response.status} ${response.statusText}`);
+      }
+
       const data = await response.json();
-      set({ movieDetails: data });
+
+      // Check if the API returned an error in the response body
+      if (data.success === false) {
+        throw new Error(data.status_message || 'Failed to fetch movie details');
+      }
+
+      set({
+        movieDetails: data,
+        isLoadingMovieDetails: false
+      });
     } catch (error) {
-      console.error("Error ->", error);
+      console.error("Error fetching movie details:", error);
+      set({
+        movieDetailsError: error.message,
+        isLoadingMovieDetails: false
+      });
     }
   }
-
 }));
