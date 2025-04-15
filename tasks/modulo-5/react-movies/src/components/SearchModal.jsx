@@ -66,7 +66,7 @@ export function SearchModal({ isOpen, onClose }) {
           <ul className="divide-y divide-gray-800">
             {movieSearchResults?.map((movie) => (
               <li key={movie.id} className="p-4 hover:bg-gray-800 transition-colors cursor-pointer">
-                <Link to={`/movies/${movie.id}`} className="flex items-start">
+                <Link to={`/movies/${movie.id}`} className="flex items-start" onClick={onClose}>
                   <div className="h-16 w-12 bg-gray-700 rounded mr-4 flex-shrink-0">
                     <Image
                       src={movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : "https://placehold.co/300x450"}

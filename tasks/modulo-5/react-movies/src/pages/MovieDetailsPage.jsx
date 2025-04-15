@@ -1,11 +1,13 @@
 import { useParams } from "react-router";
 import Header from "../components/Header";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMovieStore } from "../store/moviesStore";
 import MovieHero from "../components/MovieHero";
 import MovieDetailsSection from "../components/MovieDetailsSection";
+import { SearchModal } from "../components/SearchModal";
 
 export default function MovieDetailsPage() {
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const { movieDetails, fetchMovieDetails } = useMovieStore((state) => state);
   const params = useParams();
 
@@ -33,7 +35,8 @@ export default function MovieDetailsPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <Header />
+      <Header setIsSearchModalOpen={setIsSearchModalOpen} />
+      <SearchModal isOpen={isSearchModalOpen} onClose={() => setIsSearchModalOpen(false)} />
       <MovieHero
         title={title}
         backdrop_path={backdrop_path}
