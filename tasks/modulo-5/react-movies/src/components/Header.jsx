@@ -25,14 +25,16 @@ export default function Header({ setIsSearchModalOpen }) {
           </Link>
         </div>
         <div className="flex items-center space-x-4">
-          <Button
-            variant="outline"
-            className="hidden md:flex items-center border-gray-700 hover:bg-gray-800"
-            onClick={() => setIsSearchModalOpen(true)}
-          >
-            <Search className="h-4 w-4 mr-2" />
-            Search
-          </Button>
+          <div className="hidden md:block">
+            <Button
+              variant="outline"
+              className="flex items-center border-gray-700 hover:bg-gray-800"
+              onClick={() => setIsSearchModalOpen(true)}
+            >
+              <Search className="h-4 w-4 mr-2" />
+              Search
+            </Button>
+          </div>
           <Button
             size="sm"
             variant="outline"
