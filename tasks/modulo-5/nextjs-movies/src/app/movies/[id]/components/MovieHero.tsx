@@ -35,6 +35,7 @@ export default function MovieHero({
           alt={title}
           className="w-full h-full object-cover brightness-50"
           fill
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
 
