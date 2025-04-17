@@ -1,8 +1,7 @@
 'use client'
 import { useState, useEffect, useTransition } from "react";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Search } from "lucide-react";
-import Link from "next/link";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { searchMovies } from "./actions";
 import { Movie } from "./actions";
@@ -56,14 +55,14 @@ export default function SearchPage() {
             </Button>
           </form>
 
-          {searchTerm && (
+          {searchTerm ? (
             <div className="mt-4 text-white">
               <h2 className="text-xl font-semibold mb-2">
                 {isPending ? "Searching..." : `Results for "${searchTerm}"`}
               </h2>
               <SearchResults movies={results} isLoading={isPending} />
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     </main>
