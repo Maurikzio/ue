@@ -36,6 +36,7 @@ export default function MovieHero({
           className="w-full h-full object-cover brightness-50"
           fill
           priority
+          unoptimized={backdrop_path ? false : true}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
 
@@ -47,6 +48,7 @@ export default function MovieHero({
               className=" rounded-lg shadow-lg object-cover"
               width={500}
               height={750}
+              unoptimized={poster_path ? false : true}
             />
           </div>
           <div className="flex-1">
@@ -74,7 +76,7 @@ export default function MovieHero({
               </div>
               <div className="flex items-center">
                 <Calendar className="h-4 w-4 text-gray-400 mr-1" />
-                <span>{release_date}</span>
+                <span>{release_date ? new Date(release_date).getFullYear() : 'N/A'}</span>
               </div>
               <div className="text-gray-400">
                 Director: <span className="text-white">{director}</span>
