@@ -1,5 +1,6 @@
 import MovieDetails from "./components/MovieDetails";
 import MovieHero from "./components/MovieHero";
+import { notFound } from "next/navigation";
 const { MOVIE_DETAILS_URL, SECRET_TOKEN } = process.env;
 
 interface Crew {
@@ -18,6 +19,9 @@ export default async function MoviewPage({ params }: { params: { id: string } })
   })
   const moviewDetailsData = await moviewDetails.json();
 
+  if (moviewDetailsData.status_code === 34) {
+    return notFound();
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">
