@@ -1,12 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Movie } from "../actions";
 import { Star } from "lucide-react";
-
-interface SearchResultsProps {
-  movies: Movie[];
-  isLoading?: boolean;
-}
+import { Movie, SearchResultsProps } from "@/types";
 
 export default function SearchResults({ movies, isLoading = false }: SearchResultsProps) {
   if (isLoading) {

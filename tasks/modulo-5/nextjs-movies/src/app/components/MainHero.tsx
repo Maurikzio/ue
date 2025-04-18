@@ -3,17 +3,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
-interface MainHeroProps {
-  movie: {
-    backdrop_path: string;
-    original_title: string;
-    overview: string;
-    release_date: string;
-    vote_average: number;
-    id: number;
-  };
-}
+import { MainHeroProps } from "@/types";
 
 export default function MainHero({ movie }: MainHeroProps) {
   const {

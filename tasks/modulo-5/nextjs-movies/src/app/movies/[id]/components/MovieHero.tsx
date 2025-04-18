@@ -1,18 +1,6 @@
 import { Calendar, Clock, Heart, Play, Plus, Share2, Star } from "lucide-react";
 import Image from "next/image";
-
-interface MovieHeroProps {
-  title: string;
-  tagline: string;
-  vote_average: number;
-  poster_path: string;
-  backdrop_path: string;
-  genres: { id: number; name: string }[];
-  runtime: number;
-  release_date: string;
-  director: string;
-}
-
+import { MovieHeroProps } from "@/types";
 export default function MovieHero({
   title,
   tagline,

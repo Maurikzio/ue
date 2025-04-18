@@ -1,8 +1,9 @@
 import { ChevronRight } from "lucide-react";
 import MovieCard from "@/components/MovieCard";
 import { Button } from "@/components/ui/button";
-export default function PopularMovies({ movies }) {
+import { Movie } from "@/types";
 
+export default function PopularMovies({ movies }: { movies: Movie[] }) {
   return (
     <section className="py-12">
       <div className="container mx-auto px-4">

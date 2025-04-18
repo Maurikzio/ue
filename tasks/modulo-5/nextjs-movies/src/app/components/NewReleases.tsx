@@ -1,15 +1,8 @@
 import MovieCard from "@/components/MovieCard";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
+import { Movie } from "@/types";
 const { UPCOMING_MOVIES_URL, SECRET_TOKEN } = process.env;
-
-type Movie = {
-  poster_path: string;
-  original_title: string;
-  release_date: string;
-  vote_average: number;
-  id: number;
-}
 
 export default async function NewReleases() {
   const newReleases = await fetch(`${UPCOMING_MOVIES_URL}`, {

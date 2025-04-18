@@ -1,12 +1,8 @@
 import MovieDetails from "./components/MovieDetails";
 import MovieHero from "./components/MovieHero";
 import { notFound } from "next/navigation";
+import { Crew } from "@/types";
 const { MOVIE_DETAILS_URL, SECRET_TOKEN } = process.env;
-
-interface Crew {
-  job: string;
-  name: string;
-}
 
 export default async function MoviewPage({ params }: { params: { id: string } }) {
   const { id } = await params;

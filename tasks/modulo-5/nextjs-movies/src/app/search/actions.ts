@@ -1,15 +1,8 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { Movie } from '@/types';
 
-export interface Movie {
-  id: number;
-  title: string;
-  poster_path: string;
-  overview: string;
-  vote_average: number;
-  release_date: string;
-}
 
 export async function searchMovies(query: string): Promise<Movie[]> {
   const { SEARCH_MOVIE_URL, SECRET_TOKEN } = process.env;

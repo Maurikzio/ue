@@ -1,15 +1,5 @@
 import Image from "next/image";
-
-interface Cast {
-  name: string;
-  character: string;
-  profile_path: string;
-}
-
-interface MovieDetailsSectionProps {
-  overview: string;
-  cast: Cast[]
-}
+import { Cast, MovieDetailsSectionProps } from "@/types";
 
 export default function MovieDetailsSection({
   overview,
