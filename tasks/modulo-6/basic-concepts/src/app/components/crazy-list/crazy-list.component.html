@@ -1,0 +1,19 @@
+<p>Crazy List 😎</p>
+
+<div>
+  <input id="name" type="text" [(ngModel)]="name" />
+  <button (click)="addStudent(name)">Add Student</button>
+</div>
+<div>
+  @if(students.length === 0) {
+  <p class="students-empty">No students 😢</p>
+  }
+  <ul class="students-list">
+    @for(student of students; track student.id) {
+    <li class="students-item">
+      <p>{{student.name}}</p>
+      <button (click)="removeStudent(student.id)">X</button>
+    </li>
+    }
+  </ul>
+</div>

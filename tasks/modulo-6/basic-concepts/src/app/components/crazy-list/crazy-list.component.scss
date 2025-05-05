@@ -1,0 +1,36 @@
+.students {
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
+  }
+
+  &-item {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    justify-content: space-between;
+    ;
+    padding: 10px 25px;
+    width: 190px;
+
+    p {
+      margin: 0;
+    }
+
+    button {
+      cursor: pointer;
+    }
+  }
+
+  &-empty {
+    width: 250px;
+    text-align: center;
+  }
+}

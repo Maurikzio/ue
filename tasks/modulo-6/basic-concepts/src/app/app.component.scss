@@ -1,0 +1,11 @@
+.container {
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  flex-wrap: wrap;
+
+  >div {
+    flex: 1;
+  }
+}

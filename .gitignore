@@ -4,3 +4,5 @@
 *.db
 __pycache__
 node_modules
+.next/
+*.d.ts

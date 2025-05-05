@@ -1,0 +1,15 @@
+<p>Happy Counter 🧛</p>
+
+<div class="counter-container">
+  <h2 class="counter-value">{{counter}}</h2>
+  <div class="counter-buttons">
+    <button (click)="increment()">⬆️</button>
+    <button (click)="decrement()">⬇️</button>
+    <button (click)="restart()">restart</button>
+  </div>
+  <div class="counter-help-text">
+    @if (showText) {
+    <p class="counter-limit-text">{{limitText}}</p>
+    }
+  </div>
+</div>

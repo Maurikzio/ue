@@ -1,0 +1,29 @@
+.counter {
+  &-container {
+    background-color: #f1f1f1;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  &-value {
+    padding: 5px 10px;
+    font-size: 30px;
+  }
+
+  &-buttons {
+    display: flex;
+    gap: 10px;
+
+  }
+
+  &-help-text {
+    height: 20px;
+    font-size: 14px;
+    color: red;
+  }
+}

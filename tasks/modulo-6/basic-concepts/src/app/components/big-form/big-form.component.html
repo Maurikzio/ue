@@ -1,0 +1,47 @@
+<p> BIG FORM 💪</p>
+
+<div class="form-container">
+  <form [formGroup]="bigForm" (ngSubmit)="onSubmit()">
+    <div class="form-field">
+      <label for="name">Name:</label>
+      <input id="name" type="text" formControlName="name" />
+    </div>
+    <div class="form-field">
+      <label for="lastname">Lastname:</label>
+      <input id="lastname" type="text" formControlName="lastname" />
+    </div>
+    <div class="form-field">
+      <label for="phone">Phone:</label>
+      <input id="phone" type="text" formControlName="phone" />
+    </div>
+    <div class="form-field">
+      <label for="date_of_birth">Date of birth:</label>
+      <input id="date_of_birth" type="date" formControlName="date_of_birth" />
+    </div>
+    <div class="form-button">
+      <button [disabled]="!bigForm.valid">Send</button>
+    </div>
+  </form>
+</div>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        @for(row of ['Name', 'Lastname', 'Phone', 'Date of Birth']; track row) {
+        <th>{{row}}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for(person of people; track person.date_of_birth+person.name) {
+      <tr>
+        <th>{{person.name}}</th>
+        <th>{{person.lastname}}</th>
+        <th>{{person.phone}}</th>
+        <th>{{person.date_of_birth}}</th>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
